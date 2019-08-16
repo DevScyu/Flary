@@ -4,4 +4,5 @@ function readRequest(req, res) {
     res.status(200).send(wynnData.getTerritoryCache())
 }
 
+module.exports.createResponse = () => wynnData.getTerritoryCache()
 module.exports.readRequest = readRequest

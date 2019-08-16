@@ -17,16 +17,35 @@ server.get("/api/setAccountType/:apitoken/:token/:type", require("./routes/api/s
 server.get("/api/updateUserModels/:apitoken/:name/:cape/:elytra/:ears", require("./routes/api/updateUserModels").readRequest)
 server.post("/api/setGuildColor/:apitoken", require("./routes/api/setGuildColor").readRequest)
 
-server.get("/cache/getItemList", require("./routes/cache/getItemList").readRequest)
-server.get("/cache/getMapLocations", require("./routes/cache/getMapLocations").readRequest)
-server.get("/cache/getTerritoryList", require("./routes/cache/getTerritoryList").readRequest)
-
-server.get("/getUserModels", require("./routes/getUserModelsRoute").readRequest)
-server.get("/getUsersRoles", require("./routes/getUsersRolesRoute").readRequest)
 server.get("/requestEncryption", require("./routes/requestEncryption").readRequest)
 server.post("/responseEncryption", require("./routes/responseEncryption").readRequest)
 server.post("/uploadConfig/:token", require("./routes/uploadConfig").readRequest)
 server.post("/updateDiscord/:token", require("./routes/updateDiscord").readRequest)
+
+var bulkRoutes = {
+    itemList: {
+        route: "/cache/getItemList",
+        module: require("./routes/cache/getItemList")
+    },
+    mapLocations: {
+        route: "/cache/getMapLocations",
+        module: require("./routes/cache/getMapLocations")
+    },
+    territoryList: {
+        route: "/cache/getTerritoryList",
+        module: require("./routes/cache/getTerritoryList")
+    },
+    userModels: {
+        route: "/getUserModels",
+        module: require("./routes/getUserModelsRoute")
+    },
+    userRoles: {
+        route: "/getUsersRoles",
+        module: require("./routes/getUsersRolesRoute")
+    }
+}
+
+require("./routes/bulk")(server, bulkRoutes)
 
 server.use((req, res) => {res.status(200).redirect(config.redirectUrl)})
 
