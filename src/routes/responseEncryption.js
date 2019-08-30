@@ -1,6 +1,7 @@
 const fakeAuth = require("../core/instances/fakeAuth")
 const userManager = require("../core/managers/userManager")
 const dayManager = require("../core/managers/dayManager")
+const wynnData = require("../core/managers/wynnData")
 
 function readRequest(req, res) {
     if(!req.body || !req.body.username || !req.body.key || !req.body.version) {
@@ -27,6 +28,10 @@ function readRequest(req, res) {
         var response = new Object()
         response.authtoken = token
         response.result = "success!"
+        response.hashes = {
+            "itemList": wynnData.itemCacheHash,
+            "mapLocations": wynnData.mapCacheHash
+        }
         response.configFiles = profile.getConfigFiles()
         response.request = req.requestJson
 

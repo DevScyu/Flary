@@ -6,9 +6,12 @@ const MAP_LOCATIONS_URL = "https://api.wynncraft.com/public_api.php?action=mapLo
 
 const https = require("https")
 const fs = require("fs")
+const crypto = require('crypto');
 
 var cachedItems = {"items":[]}
+var itemCacheHash = ""
 var mapLocations = {"locations":[]}
+var mapCacheHash = ""
 
 var territoryCache = {}
 var scyuTerritories = null
@@ -17,7 +20,7 @@ var lastTerritoryCache = 0
 var guildList = null
 var guildColors = null
 
-function cacheItems() {
+function cacheMapLocations() {
     https.get(MAP_LOCATIONS_URL, (resp) => {
         var data = ""
 
@@ -29,11 +32,14 @@ function cacheItems() {
             if(data == "") return
 
             this.mapLocations = JSON.parse(data)
+            delete this.mapLocations["request"]
+
+            this.mapCacheHash = crypto.createHash("md5").update(JSON.stringify(this.mapLocations)).digest("hex")
         })
     })
 }
 
-function cacheMapLocations() {
+function cacheItems() {
     https.get(ITEM_URL, (resp) => {
         var data = ""
 
@@ -45,6 +51,9 @@ function cacheMapLocations() {
             if(data == "") return
 
             this.cachedItems = JSON.parse(data)
+            delete this.cachedItems["request"]
+
+            this.itemCacheHash = crypto.createHash("md5").update(JSON.stringify(this.cachedItems)).digest("hex")
         })
     })
 }
@@ -205,3 +214,5 @@ module.exports.cachedItems = cachedItems
 module.exports.setGuildColor = setGuildColor
 module.exports.cacheMapLocations = cacheMapLocations
 module.exports.mapLocations = mapLocations
+module.exports.itemCacheHash = itemCacheHash
+module.exports.mapCacheHash = mapCacheHash
