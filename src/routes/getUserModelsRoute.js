@@ -1,8 +1,6 @@
 const userManager = require("../core/managers/userManager")
 
-function readRequest(req, res) {
-    var json = new Object()
-
+function createResponse() {
     var capes = []
     var elytra = []
     var ears = []
@@ -13,13 +11,20 @@ function readRequest(req, res) {
         if(c.getActiveModels().earsActive) ears.push(c.getId())
     })
 
-    json.capeActive = capes
-    json.elytraActive = elytra
-    json.earsActive = ears
+    return {
+        capeActive: capes,
+        elytraActive: elytra,
+        earsActive: ears
+    }
+}
+
+function readRequest(req, res) {
+    var json = createResponse()
 
     json.request = req.requestJson
 
     res.status(200).send(json)
 }
 
+module.exports.createResponse = createResponse
 module.exports.readRequest = readRequest

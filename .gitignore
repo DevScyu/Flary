@@ -1,3 +1,4 @@
 node_modules/
 configs/main-config.json
 package-lock.json
+data/*
