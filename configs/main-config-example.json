@@ -1,0 +1,26 @@
+{
+    "redirectUrl":"https://wynntils.com",
+    "port":8888,
+    "rethink": {
+        "ip":"localhost",
+        "port":28015,
+        "database":"wynntilsaccounts",
+        "username":"test",
+        "password":"test"
+    },
+    "ratelimit": {
+        "global": 15000,
+        "user": 150,
+        "exceptions": [
+            "localhost"
+        ]
+    },
+    "apikeys": [
+        "my-default-api-key"
+    ],
+    "webhook": {
+        "url": "your-url",
+        "username": "Flary",
+        "avatar": "https://cdn.wynntils.com/flary_logo_610x905.png"
+    }
+}

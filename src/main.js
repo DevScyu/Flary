@@ -5,6 +5,8 @@ const config = require("../configs/main-config.json")
 const server = express()
 const bodyParser = require('body-parser')
 
+require("./core/managers/webhookManager").publishMessage("test1", "test2")
+
 //<--------- ROUTES --------->
 server.use(bodyParser.json({type:() => {return true}, limit: "16mb" }))
 server.use(require("./routes/middleware/rateLimit").readRequest)

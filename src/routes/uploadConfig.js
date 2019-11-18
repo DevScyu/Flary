@@ -9,11 +9,11 @@ function readRequest(req, res) {
 
 		if(body instanceof Array) {
 			body.forEach(values => {
-				if(Buffer.byteLength(JSON.stringify(values)) > 10000) return //verifies if the file lenght is more than 10kbps
+				if(Buffer.byteLength(JSON.stringify(values)) > 100000) return //verifies if the file lenght is more than 10kbps
 				if(values.base64 && values.fileName) correctJsons.push(values)
 			})
 		}else{
-			if(Buffer.byteLength(JSON.stringify(body)) > 10000) return //verifies if the file lenght is more than 10kbps
+			if(Buffer.byteLength(JSON.stringify(body)) > 100000) return //verifies if the file lenght is more than 10kbps
 			if(body.base64 && body.fileName) correctJsons.push(body)
 		}
 
@@ -22,7 +22,7 @@ function readRequest(req, res) {
 
 	var filesToUpload = getCorrectFiles(req.body)
 	if(filesToUpload == null || filesToUpload.length == 0) { //checks if the request is correct
-		res.status(400).send({"error": "Bad Request, expecting parameters (array? fileName & base64 <= 10kb/v)"})
+		res.status(400).send({"error": "Bad Request, expecting parameters (array? fileName & base64 <= 10kb/e)"})
 		return
 	}
 

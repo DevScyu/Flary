@@ -1,6 +1,8 @@
 const main = require("../../main")
 const dayManager = require("../../core/managers/dayManager")
 
+const webhook = require("../../core/managers/webhookManager")
+
 var rateLimits = {}
 
 function readRequest(req, res, next) {
@@ -19,7 +21,7 @@ function readRequest(req, res, next) {
     }*/
 
     //user ratelimits below
-    if(isRateLimited(ip, main.config.ratelimit.user, time)) {
+    if(isRateLimited(ip, main.config.ratelimit.user, time, req.url)) {
         res.status(429).send({"error": "You're being ratelimited!"})
         return
     }
@@ -32,7 +34,7 @@ function readRequest(req, res, next) {
     next()
 }
 
-function isRateLimited(address, limit, time) {
+function isRateLimited(address, limit, time, url) {
     for(i in main.config.ratelimit.exceptions) {
         if(main.config.ratelimit.exceptions[i] === address) {
             return false
@@ -63,6 +65,8 @@ function isRateLimited(address, limit, time) {
 
         console.log("\x1b[31m%s\x1b[0m", `[RTLM] RateLimit ----> The IP ${address} was RateLimited for 10 minutes`)
         dayManager.getCurrentDay().updateDailyRatelimits()
+
+        webhook.publishMessage(":fire: An user was ratelimited", `The following IP \`\`${address}\`\` was ratelimited\nRoute \`\`${url}\`\``)
         return true
     }
     
