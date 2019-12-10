@@ -51,7 +51,7 @@ function convertWynnItem(input) {
 
         //material info
         if(key === "armorType") {
-            resultItem.itemInfo["material"] = "minecraft:" + value.toLowerCase() + "_" + resultItem.itemInfo["type"].toLowerCase()
+            resultItem.itemInfo["material"] = ("minecraft:" + value.toLowerCase() + "_" + resultItem.itemInfo["type"].toLowerCase()).replace("chain", "chainmail")
             continue
         }
         if(key === "material" && value !== null) {
