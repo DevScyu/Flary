@@ -15,7 +15,7 @@ function convertWynnItem(input) {
         },
         requirements: {
             quest: getOrElse("quest", undefined),
-            classType: ("classRequirement" in input ? input["classRequirement"].toUpperCase() : undefined),
+            classType: (("classRequirement" in input && input["classRequirement"] !== null) ? input["classRequirement"].toUpperCase() : undefined),
             level: getOrElse("level", undefined),
             strength: getOrElse("strength", undefined),
             dexterity: getOrElse("dexterity", undefined),
@@ -64,19 +64,28 @@ function convertWynnItem(input) {
         var translatedName = translateStatusName(key)
         if(typeof translatedName == "undefined") continue
 
+        var min = getMin(value)
+        var max = getMax(value)
+
+        if(min > max) {
+            min = max
+            max = getMin(value)
+        }
+
         resultItem.statuses[translatedName] = {
             type: getStatusType(translatedName),
-            min: resultItem.identified ? value : getMin(value),
-            max: resultItem.identified ? value : getMax(value)
+            min: resultItem.identified ? value : min,
+            max: resultItem.identified ? value : max
         }
     }
 
     function getOrElse(key, other) {
-        return ((key in input && input[key] != null && input[key] != 0) ? input[key] : other)
+        return ((key in input && input[key] != null && input[key] != 0 && input[key] != "0-0") ? input[key] : other)
     }
 
     function getMin(raw) {
-        return (raw < 0 ? Math.round(raw * 0.7) : Math.round(raw * 0.3))
+        var result = (raw < 0 ? Math.round(raw * 0.7) : Math.round(raw * 0.3))
+        return result != 0 ? result : (raw < 0 ? -1 : 1)
     }
 
     function getMax(raw) {
@@ -87,18 +96,18 @@ function convertWynnItem(input) {
         switch(raw) {
             //translated ones
             case "spellCostPct1": return "1stSpellCost"
-            case "spellCostPct2": return "2stSpellCost"
-            case "spellCostPct3": return "3stSpellCost"
-            case "spellCostPct4": return "4stSpellCost"
+            case "spellCostPct2": return "2ndSpellCost"
+            case "spellCostPct3": return "3rdSpellCost"
+            case "spellCostPct4": return "4thSpellCost"
             case "spellCostRaw1": return "raw1stSpellCost"
-            case "spellCostRaw2": return "raw2stSpellCost"
-            case "spellCostRaw3": return "raw3stSpellCost"
-            case "spellCostRaw4": return "raw4stSpellCost"
+            case "spellCostRaw2": return "raw2ndSpellCost"
+            case "spellCostRaw3": return "raw3rdSpellCost"
+            case "spellCostRaw4": return "raw4thSpellCost"
             case "spellDamageRaw": return "rawNeutralSpellDamage"
             case "damageBonusRaw": return "rawMainAttackDamage"
             case "damageBonus": return "mainAttackDamage"
             case "healthRegenRaw": return "rawHealthRegen"
-            case "healthBonus": return "health"
+            case "healthBonus": return "rawHealth"
             case "attackSpeedBonus": return "rawTierAttackSpeed"
             case "speed": return "walkSpeed"
             case "soulPoints": return "soulPointRegen"
@@ -121,7 +130,6 @@ function convertWynnItem(input) {
             case "jumpHeight": return "rawJumpHeight"
             case "rainbowSpellDamageRaw": return "rawSpellDamage"
             case "gatherXpBonus": return "gatherXPBonus"
-            case "xpBonus": return "XPBonus"
 
             //same ones
             case "spellDamage": return "spellDamage"
@@ -135,6 +143,7 @@ function convertWynnItem(input) {
             case "lootBonus": return "lootBonus"
             case "lootQuality": return "lootQuality"
             case "gatherSpeed": return "gatherSpeed"
+            case "xpBonus": return "xpBonus"
 
             default: return undefined
         }

@@ -94,6 +94,8 @@ function convertItemCache(input) {
         newItemCache.push(newItem)
     });
 
+    itemCacheHash = crypto.createHash("md5").update(JSON.stringify(newItemCache)).digest("hex")
+
     console.log("[*] Finished Converting Item List (" + newItemCache.length + "/" + cachedItems["items"].length + ")")
 }
 

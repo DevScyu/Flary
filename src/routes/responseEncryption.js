@@ -30,6 +30,7 @@ function readRequest(req, res) {
         response.result = "success!"
         response.hashes = {
             "itemList": wynnData.itemCacheHash,
+            "newItemList": wynnData.newItemCacheHash,
             "mapLocations": wynnData.mapCacheHash
         }
         response.configFiles = profile.getConfigFiles()
