@@ -15,7 +15,7 @@ function convertWynnItem(input) {
         },
         requirements: {
             quest: getOrElse("quest", undefined),
-            class: getOrElse("classRequirement", undefined),
+            classType: ("classRequirement" in input ? input["classRequirement"].toUpperCase() : undefined),
             level: getOrElse("level", undefined),
             strength: getOrElse("strength", undefined),
             dexterity: getOrElse("dexterity", undefined),
