@@ -11,7 +11,7 @@ function convertWynnItem(input) {
             type: getOrElse("type", input["accessoryType"]).toUpperCase(),
             set: input["set"],
             dropType: input["dropType"].toUpperCase(),
-            armorColor: input["armorColor"]
+            armorColor: (input["armorColor"] != "160,101,64" ? input["armorColor"] : undefined)
         },
         requirements: {
             quest: getOrElse("quest", undefined),
