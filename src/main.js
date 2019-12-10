@@ -27,6 +27,10 @@ var bulkRoutes = {
         route: "/cache/getItemList",
         module: require("./routes/cache/getItemList")
     },
+    newItemList: {
+        route: "/cache/getNewItemList",
+        module: require("./routes/cache/getNewItemList")
+    },
     mapLocations: {
         route: "/cache/getMapLocations",
         module: require("./routes/cache/getMapLocations")

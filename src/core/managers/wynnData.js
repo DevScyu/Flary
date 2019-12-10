@@ -7,9 +7,14 @@ const MAP_LOCATIONS_URL = "https://api.wynncraft.com/public_api.php?action=mapLo
 const https = require("https")
 const fs = require("fs")
 const crypto = require('crypto');
+const itemBridge = require('./bridges/itemBridge')
 
 var cachedItems = {"items":[]}
 var itemCacheHash = ""
+
+var newItemCache = []
+var newItemCacheHash = ""
+
 var mapLocations = {"locations":[]}
 var mapCacheHash = ""
 
@@ -22,6 +27,15 @@ var guildColors = null
 
 function cacheMapLocations() {
     https.get(MAP_LOCATIONS_URL, (resp) => {
+        if (resp.statusCode < 200 || resp.statusCode > 299) { // bad status code, use backup cache
+            var data = fs.readFileSync("data/wynn/mapLocations.json");
+
+            this.mapLocations = JSON.parse(data);
+            delete this.mapLocations["request"];
+
+            return;
+        }
+
         var data = ""
 
         resp.on("data", (chunk) => {
@@ -34,6 +48,8 @@ function cacheMapLocations() {
             this.mapLocations = JSON.parse(data)
             delete this.mapLocations["request"]
 
+            //fs.writeFileSync("data/wynn/mapLocations.json", data);
+
             this.mapCacheHash = crypto.createHash("md5").update(JSON.stringify(this.mapLocations)).digest("hex")
         })
     })
@@ -41,6 +57,16 @@ function cacheMapLocations() {
 
 function cacheItems() {
     https.get(ITEM_URL, (resp) => {
+        if (resp.statusCode < 200 || resp.statusCode > 299) { // bad status code, use backup cache
+            var data = fs.readFileSync("data/wynn/items-1_19.json");
+
+            this.cachedItems = JSON.parse(data)
+            delete this.cachedItems["request"]
+
+            convertItemCache(this.cachedItems)
+            return;
+        }
+
         var data = ""
 
         resp.on("data", (chunk) => {
@@ -53,9 +79,22 @@ function cacheItems() {
             this.cachedItems = JSON.parse(data)
             delete this.cachedItems["request"]
 
+            fs.writeFileSync("data/wynn/items-1_19.json", data); // update backup cache
+
             this.itemCacheHash = crypto.createHash("md5").update(JSON.stringify(this.cachedItems)).digest("hex")
+
+            convertItemCache(this.cachedItems)
         })
     })
+}
+
+function convertItemCache(input) {
+    input["items"].forEach(it => {
+        var newItem = itemBridge.convertWynnItem(it)
+        newItemCache.push(newItem)
+    });
+
+    console.log("[*] Finished Converting Item List (" + newItemCache.length + "/" + cachedItems["items"].length + ")")
 }
 
 function getTerritoryCache() {
@@ -216,3 +255,5 @@ module.exports.cacheMapLocations = cacheMapLocations
 module.exports.mapLocations = mapLocations
 module.exports.itemCacheHash = itemCacheHash
 module.exports.mapCacheHash = mapCacheHash
+module.exports.newItemCache = newItemCache
+module.exports.newItemCacheHash = newItemCacheHash
