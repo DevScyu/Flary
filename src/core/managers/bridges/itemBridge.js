@@ -99,7 +99,7 @@ function convertWynnItem(input) {
             case "rawStrength": return true;
             case "rawDexterity": return true;
             case "rawIntelligence": return true;
-            case "rawDefense": return true;
+            case "rawDefence": return true;
             case "rawAgility": return true;
 
             default: return false;
@@ -128,7 +128,7 @@ function convertWynnItem(input) {
             case "strengthPoints": return "rawStrength" //
             case "dexterityPoints": return "rawDexterity" //
             case "intelligencePoints": return "rawIntelligence" //
-            case "defensePoints": return "rawDefense" //
+            case "defensePoints": return "rawDefence" //
             case "agilityPoints": return "rawAgility" //
             case "bonusEarthDamage": return "earthDamage" //
             case "bonusThunderDamage": return "thunderDamage" //
@@ -182,8 +182,8 @@ function getIdOrder() {
         order: {
             //first group {attack stuff}
             "attackSpeed": 1,
-            "mainAttackDamage": 2,
-            "rawMainAttackNeutralDamage": 3,
+            "rawMainAttackNeutralDamage": 2,
+            "mainAttackDamage": 3,
             "rawNeutralSpellDamage": 4,
             "rawSpellDamage": 5,
             "spellDamage": 6,
@@ -210,35 +210,35 @@ function getIdOrder() {
             "rawStrength": 23,
             "rawDexterity": 24,
             "rawIntelligence": 25,
-            "rawDefense": 26,
+            "rawDefence": 26,
             "rawAgility": 27,
-            //sixth group {XP/Gathering stuff}
-            "xpBonus": 28,
-            "gatherXPBonus": 29,
-            "lootBonus": 30,
-            "lootQuality": 31,
-            "gatherSpeed": 32,
-            "emeraldStealing": 33,
-            "soulPointRegen": 34,
+            //sixth group {passive damage}
+            "exploding": 28,
+            "poison": 29,
+            "thorns": 30,
+            "reflection": 31,
             //seventh group {movement stuff}
-            "walkSpeed": 35,
-            "sprint": 36,
-            "sprintRegen": 37,
-            "rawJumpHeight": 38,
-            //eighth group {passive damage}
-            "poison": 39,
-            "exploding": 40,
-            "thorns": 41,
-            "reflection": 42,
+            "walkSpeed": 32,
+            "sprint": 32,
+            "sprintRegen": 34,
+            "rawJumpHeight": 35,
+            //eigth group {XP/Gathering stuff}
+            "soulPointRegen": 36,
+            "lootBonus": 37,
+            "lootQuality": 38,
+            "emeraldStealing": 39,
+            "xpBonus": 40,
+            "gatherXPBonus": 41,
+            "gatherSpeed": 42,
             //ninth group {spell stuff}
-            "1stSpellCost": 43,
-            "raw1stSpellCost": 44,
-            "2ndSpellCost": 45,
-            "raw2ndSpellCost": 46,
-            "3rdSpellCost": 47,
-            "raw3rdSpellCost": 48,
-            "4thSpellCost": 49,
-            "raw4thSpellCost": 50
+            "raw1stSpellCost": 43,
+            "1stSpellCost": 44,
+            "raw2ndSpellCost": 45,
+            "2ndSpellCost": 46,
+            "raw3rdSpellCost": 47,
+            "3rdSpellCost": 48,
+            "raw4thSpellCost": 49,
+            "4thSpellCost": 50
         },
         groups: [
             "1-6",
@@ -246,9 +246,9 @@ function getIdOrder() {
             "13-17",
             "18-22",
             "23-27",
-            "28-34",
-            "35-39",
-            "39-42",
+            "28-31",
+            "32-35",
+            "36-42",
             "43-50"
         ]
     }
