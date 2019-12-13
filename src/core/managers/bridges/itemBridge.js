@@ -64,19 +64,29 @@ function convertWynnItem(input) {
         var translatedName = translateStatusName(key)
         if(typeof translatedName == "undefined") continue
 
-        var min = getMin(value)
-        var max = getMax(value)
-
-        if(min > max) {
-            min = max
-            max = getMin(value)
-        }
-
         resultItem.statuses[translatedName] = {
             type: getStatusType(translatedName),
-            min: isFixed(translatedName) ? value : min,
-            max: isFixed(translatedName) ? value : max
+            isFixed: isFixed(translatedName),
+            baseValue: raw
         }
+
+        // If false, "min" and "max" properties will not be sent, but they will still be available to manipulate here
+        const send_minmax = true;
+
+        Object.defineProperties(resultItem.statuses[translatedName], {
+            min: {
+                value: isFixed(translatedName) ? value : getMin(value),
+                writable: true,
+                configurable: true,
+                enumerable: send_minmax
+            },
+            max: {
+                value: isFixed(translatedName) ? value : getMax(value),
+                writable: true,
+                configurable: true,
+                enumerable: send_minmax
+            }
+        })
     }
 
     function getOrElse(key, other) {
@@ -84,12 +94,13 @@ function convertWynnItem(input) {
     }
 
     function getMin(raw) {
-        var result = (raw < 0 ? Math.round(raw * 0.7) : Math.round(raw * 0.3))
-        return result != 0 ? result : (raw < 0 ? -1 : 1)
+        const result = raw < 0 ? Math.round(raw * 1.3) : Math.round(raw * 0.3);
+        return result === 0 ? Math.sign(raw) : result;
     }
 
     function getMax(raw) {
-        return Math.round(raw * 1.3)
+        const result = raw < 0 ? Math.round(raw * 0.7) : Math.round(raw * 1.3);
+        return result === 0 ? Math.sign(raw) : result;
     }
 
     function isFixed(raw) {
