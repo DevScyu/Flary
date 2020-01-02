@@ -14,8 +14,6 @@ function readRequest(req, res) {
         response.result = "Error! The provided user token is invalid"
     }else if(user.getAccountType() === up.AccountType.BANNED) {
         response.result = "Error! The provided user is banned"
-    }else if(Object.keys(user.getConfigFiles).length > 30) {
-        response.result = "Error! The user has more than 30 uploaded files"
     }else{
         user.updateDiscordInfo(req.body.id, req.body.username)
         response.result = "Success!"
