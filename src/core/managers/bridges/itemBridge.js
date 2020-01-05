@@ -67,7 +67,7 @@ function convertWynnItem(input) {
         resultItem.statuses[translatedName] = {
             type: getStatusType(translatedName),
             isFixed: isFixed(translatedName),
-            baseValue: raw
+            baseValue: value
         }
 
         // If false, "min" and "max" properties will not be sent, but they will still be available to manipulate here
