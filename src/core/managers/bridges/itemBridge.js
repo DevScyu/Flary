@@ -261,6 +261,16 @@ function getIdOrder() {
             "32-35",
             "36-42",
             "43-50"
+        ],
+        inverted: [
+            "1stSpellCost",
+            "2ndSpellCost",
+            "3rdSpellCost",
+            "4thSpellCost",
+            "raw1stSpellCost",
+            "raw2ndSpellCost",
+            "raw3rdSpellCost",
+            "raw4thSpellCost",
         ]
     }
 }
