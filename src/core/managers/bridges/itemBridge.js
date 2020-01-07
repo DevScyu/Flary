@@ -163,38 +163,38 @@ function convertWynnItem(input) {
 function getIdOrder() {
     return {
         order: {
-            //first group {attack stuff}
-            "attackSpeed": 1,
-            "rawMainAttackNeutralDamage": 2,
-            "mainAttackDamage": 3,
-            "rawNeutralSpellDamage": 4,
-            "rawSpellDamage": 5,
-            "spellDamage": 6,
-            //second group {health/mana stuff}
-            "rawHealth": 7,
-            "rawHealthRegen": 8,
-            "healthRegen": 9,
-            "lifeSteal": 10,
-            "manaRegen": 11,
-            "manaSteal": 12,
-            //third group {damage stuff}
-            "earthDamage": 13,
-            "thunderDamage": 14,
-            "waterDamage": 15,
-            "fireDamage": 16,
-            "airDamage": 17,
-            //fourth group {defence stuff}
-            "earthDefence": 18,
-            "thunderDefence": 19,
-            "waterDefence": 20,
-            "fireDefence": 21,
-            "airDefence": 22,
-            //fifth group {SP stuff}
-            "rawStrength": 23,
-            "rawDexterity": 24,
-            "rawIntelligence": 25,
-            "rawDefence": 26,
-            "rawAgility": 27,
+            //first group {SP stuff}
+            "rawStrength": 1,
+            "rawDexterity": 2,
+            "rawIntelligence": 3,
+            "rawDefence": 4,
+            "rawAgility": 5,
+            //second group {attack stuff}
+            "attackSpeed": 6,
+            "rawMainAttackNeutralDamage": 7,
+            "mainAttackDamage": 8,
+            "rawNeutralSpellDamage": 9,
+            "rawSpellDamage": 10,
+            "spellDamage": 11,
+            //third group {health/mana stuff}
+            "rawHealth": 12,
+            "rawHealthRegen": 13,
+            "healthRegen": 14,
+            "lifeSteal": 15,
+            "manaRegen": 16,
+            "manaSteal": 17,
+            //fourth group {damage stuff}
+            "earthDamage": 18,
+            "thunderDamage": 19,
+            "waterDamage": 20,
+            "fireDamage": 21,
+            "airDamage": 22,
+            //fifth group {defence stuff}
+            "earthDefence": 23,
+            "thunderDefence": 24,
+            "waterDefence": 25,
+            "fireDefence": 26,
+            "airDefence": 27,
             //sixth group {passive damage}
             "exploding": 28,
             "poison": 29,
@@ -224,9 +224,9 @@ function getIdOrder() {
             "4thSpellCost": 50
         },
         groups: [
-            "1-6",
-            "7-12",
-            "13-17",
+            "1-5",
+            "6-11",
+            "12-17",
             "18-22",
             "23-27",
             "28-31",
