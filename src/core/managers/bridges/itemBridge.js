@@ -1,7 +1,7 @@
 
 function convertWynnItem(input) {
     var resultItem = {
-        displayName: getOrElse("displayName", input["name"]),
+        displayName: getOrElse("displayName", input["name"]).replace("֎", ""), // cancer has ֎ in it name for a random reason
         tier: input["tier"].toUpperCase(),
         identified: getOrElse("identified", false),
         powderAmount: input["sockets"],
